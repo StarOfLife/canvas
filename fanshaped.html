@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title> ≤‚ ‘“≥ </title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	</style>
+</head>
+<body>
+    <div id="canva">
+    	<canvas width="1500" height="800" id="canvas"></canvas>
+    </div>
+    <script type="text/javascript">
+    	function fanshaped(canvasId,obj){
+    		var context=document.querySelector(canvasId);
+    		if(context.getContext){
+    			var con=context.getContext("2d");
+    		}else{
+    			return;
+    		}
+    		var value=obj['value'],color=obj['color'],x=obj['center'][0],y=obj['center'][1],len=value.length,radius=obj['radius'];
+    		var	angle=value.map(function(item,index,array){
+    			var sum=array.reduce(function(prev,cur){
+    				return prev+cur;
+    			})
+    			return item/sum;
+    		});
+    		var startAngle=0;
+    		for(var i=0;i<len;i++){
+				con.beginPath();
+				con.moveTo(x,y);
+				con.fillStyle=color[i];
+				con.arc(x,y,radius,startAngle*Math.PI*2,(startAngle+angle[i])*Math.PI*2,false);
+				con.closePath();
+				con.fill();
+				fillFont(angle[i],startAngle,radius);
+				startAngle+=angle[i];
+    		}
+    		function fillFont(num,st,r){
+    			con.save();
+    			con.font="0.75rem Arial";
+    			con.textAlign="center";
+    			con.fillStyle="#000";
+    			var text=(num*100).toFixed(2)+"%";
+    			con.translate(x,y);
+    			var angle=(st+num/2)*Math.PI*2;
+    			var x1= Math.cos(angle)*r/2;
+    			var y1= Math.sin(angle)*r/2;
+    			con.fillText(text,x1,y1);
+    			con.translate(0,0);
+    			con.restore();
+    		}
+    	}
+    	fanshaped("#canvas",{value:[25,42,13,16,15,20],color:["#f00","#fc0","#ce0","#faa","#dee","#aecb00"],center:[200,150],radius:150})
+    </script>
+
+</body>
+</html>

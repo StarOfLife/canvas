@@ -1,1 +1,1 @@
-test
+canvas绘制的扇形图。传入参数为canvas的id，数据对象，(类似于{value:[1,2,3],color:["red","green","black"],center[50,50],radius:50})
